@@ -38,6 +38,7 @@ class MainActivity : AppCompatActivity() {
                 productList.add(product)
                 //notify adapter
                 productsAdapter.notifyDataSetChanged()
+
             }
         }
 
