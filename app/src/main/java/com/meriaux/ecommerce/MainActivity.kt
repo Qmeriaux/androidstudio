@@ -41,6 +41,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+
         retrofitViewModel.categories.observe(this) {
             categoriesList.clear()
             categoriesList.add("All")
