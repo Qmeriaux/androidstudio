@@ -65,7 +65,6 @@ class MainActivity : AppCompatActivity() {
                     } else {
                         retrofitViewModel.getByCategory(selectedCategory)
                     }
-                    // TODO ne marche pas du tout la team
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {

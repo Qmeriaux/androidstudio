@@ -2,6 +2,7 @@ package com.meriaux.ecommerce.services
 
 import com.meriaux.ecommerce.beans.Product
 import retrofit2.http.GET
+import retrofit2.http.Path
 
 
 interface RetrofitService {
@@ -12,5 +13,5 @@ interface RetrofitService {
     suspend fun getCategories(): List<String>
 
     @GET("/products/category/{category}")
-    suspend fun getByCategory(category: String): List<Product>
+    suspend fun getByCategory(@Path("category") category: String): List<Product>
 }
