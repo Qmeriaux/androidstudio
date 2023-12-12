@@ -23,9 +23,6 @@ data class Product(
     @SerializedName("image")
     var image: String,
 
-    @SerializedName("rating.rate")
-    var rating: String,
-
-    @SerializedName("rating.count")
-    var ratingCount: String
+    @SerializedName("rating")
+    var rating: Rating = Rating()
 ) : Serializable
