@@ -7,13 +7,14 @@ import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.room.Room
+import com.meriaux.ecommerce.Database
 
 import com.meriaux.ecommerce.adapters.ProductsAdapter
 import com.meriaux.ecommerce.beans.Product
 import com.meriaux.ecommerce.databinding.ActivityMainBinding
 import com.meriaux.ecommerce.objects.RetrofitApi
-import com.meriaux.ecommerce.viewmodels.RetrofitViewModel
-import kotlin.math.log
+import com.meriaux.ecommerce.viewmodels.MainViewModel
 
 class MainActivity : AppCompatActivity(), ProductsAdapter.OnItemClickListener {
     private lateinit var binding: ActivityMainBinding
@@ -21,17 +22,26 @@ class MainActivity : AppCompatActivity(), ProductsAdapter.OnItemClickListener {
     private lateinit var categoriesAdapter: ArrayAdapter<String>
     private var productList = ArrayList<Product>()
     private var categoriesList = ArrayList<String>()
+    private var database: Database? = null
+    private fun initDatabase() {
+        database = Room.databaseBuilder(
+            applicationContext,
+            Database::class.java,
+            "database"
+        ).build()
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        initDatabase()
     }
 
     override fun onStart() {
         super.onStart()
-        val retrofitViewModel = RetrofitViewModel(RetrofitApi)
-        val categories = retrofitViewModel.getCategories()
-        retrofitViewModel.data.observe(this) {
+        val mainViewModel = MainViewModel(RetrofitApi)
+        val categories = mainViewModel.getCategories()
+        mainViewModel.data.observe(this) {
             // for each product in the list, add it to the productList
             //clear list before
             productList.clear()
@@ -43,7 +53,7 @@ class MainActivity : AppCompatActivity(), ProductsAdapter.OnItemClickListener {
         }
 
 
-        retrofitViewModel.categories.observe(this) {
+        mainViewModel.categories.observe(this) {
             categoriesList.clear()
             categoriesList.add("All")
             for (category in it) {
@@ -63,9 +73,9 @@ class MainActivity : AppCompatActivity(), ProductsAdapter.OnItemClickListener {
                     val selectedCategory = categoriesList[position]
                     Log.i("test", selectedCategory)
                     if (selectedCategory == "All") {
-                        retrofitViewModel.getAll()
+                        mainViewModel.getAll()
                     } else {
-                        retrofitViewModel.getByCategory(selectedCategory)
+                        mainViewModel.getByCategory(selectedCategory)
                     }
                 }
 
@@ -95,8 +105,8 @@ class MainActivity : AppCompatActivity(), ProductsAdapter.OnItemClickListener {
         }
 
         // get categories, selected category and products
-        retrofitViewModel.getCategories()
-        retrofitViewModel.getAll()
+        mainViewModel.getCategories()
+        mainViewModel.getAll()
     }
 
     override fun onItemClick(position: Int) {

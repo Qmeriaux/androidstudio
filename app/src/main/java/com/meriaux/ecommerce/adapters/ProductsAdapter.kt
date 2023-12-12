@@ -24,7 +24,7 @@ class ProductsAdapter(private var productList : ArrayList<Product>, private var 
         val constraintLayout = itemView.findViewById<ConstraintLayout>(R.id.productLayout)
         fun bind(item: Product) {
             title.text = item.title
-            price.text = "price : " + item.price.toString()
+            price.text = "Price : " + item.price.toString() + " €"
             Glide.with(itemView.context).load(item.image).into(image)
             constraintLayout.setOnClickListener {
                 Log.i("test", "clicked on " + item.title)

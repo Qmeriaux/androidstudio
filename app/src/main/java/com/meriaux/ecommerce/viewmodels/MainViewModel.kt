@@ -10,7 +10,7 @@ import com.meriaux.ecommerce.objects.RetrofitApi
 import com.meriaux.ecommerce.services.RetrofitService
 import kotlinx.coroutines.launch
 
-class RetrofitViewModel (
+class MainViewModel (
     private val retrofitApi: RetrofitApi
 ): ViewModel() {
     private val _data = MutableLiveData<List<Product>>()
