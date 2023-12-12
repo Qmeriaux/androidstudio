@@ -1,8 +1,9 @@
 package com.meriaux.ecommerce.beans
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
-data class Product (
+data class Product(
 
     @SerializedName("id")
     var id: Int,
@@ -22,6 +23,9 @@ data class Product (
     @SerializedName("image")
     var image: String,
 
-    @SerializedName("rating")
-    var rating: Rating = Rating()
-)
+    @SerializedName("rating.rate")
+    var rating: String,
+
+    @SerializedName("rating.count")
+    var ratingCount: String
+) : Serializable

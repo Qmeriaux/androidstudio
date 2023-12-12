@@ -1,12 +1,13 @@
-package com.meriaux.ecommerce
+package com.meriaux.ecommerce.activities
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import com.google.android.material.navigation.NavigationBarView.OnItemSelectedListener
+
 import com.meriaux.ecommerce.adapters.ProductsAdapter
 import com.meriaux.ecommerce.beans.Product
 import com.meriaux.ecommerce.databinding.ActivityMainBinding
@@ -14,7 +15,7 @@ import com.meriaux.ecommerce.objects.RetrofitApi
 import com.meriaux.ecommerce.viewmodels.RetrofitViewModel
 import kotlin.math.log
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), ProductsAdapter.OnItemClickListener {
     private lateinit var binding: ActivityMainBinding
     private lateinit var productsAdapter: ProductsAdapter
     private lateinit var categoriesAdapter: ArrayAdapter<String>
@@ -78,7 +79,7 @@ class MainActivity : AppCompatActivity() {
 
         // Products recyclerView
         val recyclerViewVariable = binding.productsRecyclerView
-        productsAdapter = ProductsAdapter(productList)
+        productsAdapter = ProductsAdapter(productList, listener = this)
 
         // Categories Spinner
         val categoriesSpinner = binding.categoriesList
@@ -96,5 +97,12 @@ class MainActivity : AppCompatActivity() {
         // get categories, selected category and products
         retrofitViewModel.getCategories()
         retrofitViewModel.getAll()
+    }
+
+    override fun onItemClick(position: Int) {
+        Log.i("test", "clicked on " + productList[position].title)
+        val intent = Intent(applicationContext, ProductActivity::class.java)
+        intent.putExtra("product", productList[position])
+        startActivity(intent)
     }
 }
