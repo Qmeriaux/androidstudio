@@ -1,10 +1,13 @@
 package com.meriaux.ecommerce.objects
 
+import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.parcelize.Parcelize
 
 @Entity
+@Parcelize
 data class CartEntity(
     @PrimaryKey(autoGenerate = true)
     var id: Int,
@@ -14,4 +17,4 @@ data class CartEntity(
 
     @ColumnInfo(name = "quantity")
     var quantity: Int
-)
+) : Parcelable

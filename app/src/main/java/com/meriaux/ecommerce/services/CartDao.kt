@@ -10,14 +10,14 @@ import com.meriaux.ecommerce.objects.CartEntity
 @Dao
 interface CartDao {
     @Insert
-    fun insert(cart: CartEntity)
+    suspend fun insert(cart: CartEntity)
 
     @Update
-    fun update(cart: CartEntity)
+    suspend fun update(cart: CartEntity)
 
     @Delete
-    fun delete(cart: CartEntity)
+    suspend fun delete(cart: CartEntity)
 
     @Query("SELECT * FROM cartentity")
-    fun getAll(): List<CartEntity>
+    suspend fun getAll(): List<CartEntity>
 }
